@@ -1,0 +1,18 @@
+services:
+  uc-chrome:
+    build: .
+    container_name: uc-chrome-container
+    volumes:
+      - .:/app
+      - chrome-data:/root/.config/google-chrome  # To persist Chrome data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DISPLAY=:99
+    ports:
+      - "5900:5900"  # VNC port
+    privileged: true  # Required for Chrome
+    shm_size: 2gb     # Chrome needs shared memory
+    restart: unless-stopped
+
+volumes:
+  chrome-data:
